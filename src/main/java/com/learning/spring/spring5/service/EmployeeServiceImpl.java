@@ -1,12 +1,12 @@
 package com.learning.spring.spring5.service;
 
 import com.learning.spring.spring5.model.Employee;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.List;
 
-@Service
+@Component
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
