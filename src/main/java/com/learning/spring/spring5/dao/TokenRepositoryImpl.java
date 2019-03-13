@@ -11,13 +11,18 @@ public class TokenRepositoryImpl implements TokenRepository {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public void saveToken(final String token, final boolean isValid) {
-        redisTemplate.opsForValue().set(token, isValid);
+    public boolean isTokenValid(final String token) {
+        return null == redisTemplate.opsForValue().get(token) ? false : true;
     }
 
     @Override
-    public boolean isTokenValid(final String token) {
-        return null == redisTemplate.opsForValue().get(token) ? false : true;
+    public void createTokenForUser(String userId, String token) {
+        redisTemplate.opsForValue().set(userId, token);
+    }
+
+    @Override
+    public String getToken(String userId) {
+        return redisTemplate.opsForValue().get(userId).toString();
     }
 
 }

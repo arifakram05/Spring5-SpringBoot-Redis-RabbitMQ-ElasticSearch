@@ -39,7 +39,6 @@ public class JedisConfiguration {
         GenericObjectPoolConfig.setMaxIdle(maxIdle);
         GenericObjectPoolConfig.setMinIdle(minIdle);
         return JedisPoolingClientConfigurationBuilder.poolConfig(GenericObjectPoolConfig).build();
-        // https://commons.apache.org/proper/commons-pool/apidocs/org/apache/commons/pool2/impl/GenericObjectPool.html
     }
 
     // Create Jedis connection factory
@@ -56,7 +55,7 @@ public class JedisConfiguration {
 
     // Create Jedis template
     @Bean
-    public RedisTemplate redisTemplate() {
+    public RedisTemplate getRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(getJedisConnectionFactory());
         redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -65,4 +64,5 @@ public class JedisConfiguration {
         // redisTemplate.setHashValueSerializer(new StringRedisSerializer()));
         return redisTemplate;
     }
+
 }

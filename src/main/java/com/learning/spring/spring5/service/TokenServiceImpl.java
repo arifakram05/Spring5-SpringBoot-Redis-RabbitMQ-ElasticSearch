@@ -4,6 +4,8 @@ import com.learning.spring.spring5.dao.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class TokenServiceImpl implements TokenService {
 
@@ -11,12 +13,17 @@ public class TokenServiceImpl implements TokenService {
     TokenRepository tokenRepository;
 
     @Override
-    public void setToken(final String token) {
-        tokenRepository.saveToken(token, true);
+    public boolean isTokenValid(final String token) {
+        return tokenRepository.isTokenValid(token);
     }
 
     @Override
-    public boolean isTokenValid(final String token) {
-        return tokenRepository.isTokenValid(token);
+    public void createToken(String userId) {
+        tokenRepository.createTokenForUser(userId, UUID.randomUUID().toString());
+    }
+
+    @Override
+    public String getToken(String userId) {
+        return tokenRepository.getToken(userId);
     }
 }

@@ -15,23 +15,27 @@ public class TokenController {
     @Autowired
     private TokenService tokenService;
 
-    @PostMapping("/save/{token}")
-    void saveToken(@PathVariable("token") String token) {
-        try {
-            tokenService.setToken(token);
-        } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("Could not save the token");
-        }
-    }
-
     @GetMapping("/check/{token}")
     boolean checkTokenIfExists(@PathVariable("token") String token) {
         try {
             return tokenService.isTokenValid(token);
         } catch (Exception e) {
-            System.out.println(e);
-            throw new RuntimeException("Could not save the token");
+            throw new RuntimeException("Error while checking the token");
         }
     }
+
+    @PostMapping("/create/{userId}")
+    void createTokenForUser(@PathVariable("userId") String userId) {
+        try {
+            tokenService.createToken(userId);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not create token for the user");
+        }
+    }
+
+    @GetMapping("/user/{userId}")
+    String getTokenAssignedToUser(@PathVariable("userId") String userId) {
+        return tokenService.getToken(userId);
+    }
+
 }
