@@ -12,7 +12,7 @@ public interface UserService {
 
     User getUserById(String id);
 
-    List<User> getUsersByLastName(String lastName);
+    List<User> getUsersByPattern(String query);
 
-    List<User> getUsersByNameContaining(String query);
+    List<User> getUsersByGivenName(String name);
 }

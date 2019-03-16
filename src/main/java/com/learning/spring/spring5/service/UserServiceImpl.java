@@ -8,9 +8,11 @@ import me.xdrop.jrand.generators.person.LastnameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -43,13 +45,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getUsersByLastName(String lastName) {
-        return userElasticsearchRepository.getUsersByLastName(lastName);
+    public List<User> getUsersByPattern(String query) {
+        List<User> firstNamesList = userElasticsearchRepository.getUsersByFirstNameContaining(query);
+        List<User> lastNamesList = userElasticsearchRepository.getUsersByLastNameContaining(query);
+        return Stream.concat(firstNamesList.stream(), lastNamesList.stream()).distinct().collect(Collectors.toList());
     }
 
     @Override
-    public List<User> getUsersByNameContaining(String query) {
-        return userElasticsearchRepository.getUsersByFirstNameOrLastNameContaining(query, query);
+    public List<User> getUsersByGivenName(String name) {
+        return userElasticsearchRepository.getUsersByFirstNameOrLastNameContaining(name);
     }
 
 

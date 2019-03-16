@@ -37,13 +37,13 @@ public class UserController {
         return userService.getUserById(id);
     }
 
-    @GetMapping("/users/last-name/{lastName}")
-    public List<User> getUsersByLastName(@PathVariable String lastName) {
-        return userService.getUsersByLastName(lastName);
+    @GetMapping("/search")
+    public List<User> getUsersByGivenPattern(@RequestParam(name = "query") String query) {
+        return userService.getUsersByPattern(query);
     }
 
-    @GetMapping("/users")
-    public List<User> getUsersByPattern(@RequestParam(name = "query") String query) {
-        return userService.getUsersByNameContaining(query);
+    @GetMapping("/search-by-name")
+    public List<User> getUsersByGivenName(@RequestParam(name = "name") String name) {
+        return userService.getUsersByGivenName(name);
     }
 }
