@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 
 @EnableCaching
 @Configuration
-public class JedisConfiguration {
+public class RedisConfig {
 
     // below annotation is how you read a key from application.properties
     @Value("${redis.host}")
