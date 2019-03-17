@@ -1,9 +1,11 @@
 package com.learning.spring.spring5.rest;
 
+import com.learning.spring.spring5.exception.BadPathParamException;
 import com.learning.spring.spring5.model.User;
 import com.learning.spring.spring5.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,8 +45,13 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}")
-    public User getUserById(@PathVariable String id) {
-        return userService.getUserById(id);
+    public ResponseEntity<Object> getUserById(@PathVariable String id) {
+        log.info("Request received for user " + id);
+        if (id.length() != 6) {
+            throw new BadPathParamException("ID should be exactly 6 digits long.");
+        }
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok().body(user);
     }
 
     @GetMapping("/search")

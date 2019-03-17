@@ -28,7 +28,7 @@ public class TokenServiceImpl implements TokenService {
     @Cacheable(value = "tokenCache", key = "#userId")
     @Override
     public String getToken(String userId) {
-        log.debug("Fetching user Id from database...");
+        log.info("Fetching user Id " + userId + " from database.");
         return tokenRepository.getToken(userId);
     }
 }
