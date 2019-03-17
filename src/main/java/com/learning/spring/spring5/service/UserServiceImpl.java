@@ -6,9 +6,10 @@ import me.xdrop.jrand.JRand;
 import me.xdrop.jrand.generators.person.FirstnameGenerator;
 import me.xdrop.jrand.generators.person.LastnameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,6 +38,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public long getUserCount() {
         return userElasticsearchRepository.count();
+    }
+
+    @Override
+    public List<User> getAllUsers(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.ASC, "_id"));
+        return userElasticsearchRepository.findAll(pageable).getContent();
     }
 
     @Override

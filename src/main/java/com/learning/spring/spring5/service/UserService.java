@@ -10,6 +10,8 @@ public interface UserService {
 
     long getUserCount();
 
+    List<User> getAllUsers(int page, int size);
+
     User getUserById(String id);
 
     List<User> getUsersByPattern(String query);

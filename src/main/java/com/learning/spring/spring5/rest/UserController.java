@@ -32,6 +32,11 @@ public class UserController {
         return userService.getUserCount();
     }
 
+    @GetMapping("/users")
+    public List<User> getAllUsers(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return userService.getAllUsers(page, size);
+    }
+
     @GetMapping("/users/{id}")
     public User getUserById(@PathVariable String id) {
         return userService.getUserById(id);
