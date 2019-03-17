@@ -55,11 +55,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-		<dependency>
-			<groupId>me.xdrop</groupId>
-			<artifactId>jrand</artifactId>
-			<version>0.2.5-alpha</version>
-		</dependency>
 		<!--Test Dependencies-->
         <dependency>
 			<groupId>org.springframework.boot</groupId>

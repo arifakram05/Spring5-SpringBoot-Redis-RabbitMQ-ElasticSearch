@@ -2,15 +2,14 @@ package com.learning.spring.spring5.service;
 
 import com.learning.spring.spring5.dao.UserElasticsearchRepository;
 import com.learning.spring.spring5.model.User;
-import me.xdrop.jrand.JRand;
-import me.xdrop.jrand.generators.person.FirstnameGenerator;
-import me.xdrop.jrand.generators.person.LastnameGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -20,19 +19,28 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     UserElasticsearchRepository userElasticsearchRepository;
-    FirstnameGenerator firstname = JRand.firstname();
-    LastnameGenerator lastname = JRand.lastname();
+    Random random = new Random();
+    List<String> firstNames = Arrays.asList("Mark", "Steve", "Rob", "Arif", "Sachin", "Ricky", "Daniel", "Elon", "James", "Lance");
+    List<String> lastNames = Arrays.asList("Edison", "Waugh", "Klusener", "Kallis", "Fleming", "Lee", "Musk", "Tesla", "Adams");
 
     @Override
     public void createUsers() {
         List<User> users = IntStream.rangeClosed(10000, 10100).mapToObj(id -> {
             User user = new User();
             user.setUserId(String.valueOf(id));
-            user.setFirstName(firstname.gen());
-            user.setLastName(lastname.gen());
+            user.setFirstName(getRandomFirstName());
+            user.setLastName(getRandomLastName());
             return user;
         }).collect(Collectors.toList());
         userElasticsearchRepository.saveAll(users);
+    }
+
+    private String getRandomFirstName() {
+        return firstNames.get(random.nextInt(firstNames.size()));
+    }
+
+    private String getRandomLastName() {
+        return lastNames.get(random.nextInt(lastNames.size()));
     }
 
     @Override
