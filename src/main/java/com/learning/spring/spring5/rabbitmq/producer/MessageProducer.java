@@ -17,12 +17,11 @@ public class MessageProducer {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void sendMessage(String message) {
+    public void sendMessage(String queue, String message) {
         // We are sending our message to default exchange.
         // All messages to RabbitMQ should be sent in byte array; spring will take care of this for us.
-        // We have specified the queue name as 'arif.messages'
         log.info("Writing data: " + message);
-        rabbitTemplate.convertAndSend("arif.messages", message);
+        rabbitTemplate.convertAndSend(queue, message);
     }
 
     public void createEmployee(Employee employee) {

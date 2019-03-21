@@ -24,7 +24,7 @@ public class RabbitMQDemoApplication implements CommandLineRunner {
     @Override
     public void run(final String... args) throws Exception {
         // sending message to queue 1
-        messageProducer.sendMessage("Hello Arif! How are you doing!");
+        messageProducer.sendMessage("q.messages", "Hello Arif! How are you doing!");
         // sending message to queue 2
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm");
         dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));
