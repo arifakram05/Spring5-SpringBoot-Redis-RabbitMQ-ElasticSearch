@@ -17,4 +17,8 @@ public interface UserService {
     List<User> getUsersByPattern(String query);
 
     List<User> getUsersByGivenName(String name);
+
+    void saveUser();
+
+    void getUsers();
 }

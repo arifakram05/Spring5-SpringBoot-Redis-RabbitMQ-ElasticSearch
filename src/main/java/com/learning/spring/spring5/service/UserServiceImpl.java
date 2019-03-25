@@ -1,7 +1,9 @@
 package com.learning.spring.spring5.service;
 
 import com.learning.spring.spring5.dao.UserElasticsearchRepository;
+import com.learning.spring.spring5.dao.UserRDBMSRepository;
 import com.learning.spring.spring5.model.User;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -15,10 +17,13 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
+@Log4j2
 public class UserServiceImpl implements UserService {
 
     @Autowired
     UserElasticsearchRepository userElasticsearchRepository;
+    @Autowired
+    UserRDBMSRepository userRDBMSRepository;
     Random random = new Random();
     List<String> firstNames = Arrays.asList("Mark", "Steve", "Rob", "Arif", "Sachin", "Ricky", "Daniel", "Elon", "James", "Lance");
     List<String> lastNames = Arrays.asList("Edison", "Waugh", "Klusener", "Kallis", "Fleming", "Lee", "Musk", "Tesla", "Adams");
@@ -71,5 +76,26 @@ public class UserServiceImpl implements UserService {
         return userElasticsearchRepository.getUsersByFirstNameOrLastNameContaining(name);
     }
 
+    @Override
+    public void saveUser() {
+        final com.learning.spring.spring5.model.sql.User user = new com.learning.spring.spring5.model.sql.User();
+        user.setEmail("m.arifakram@gmail.com");
+        user.setFirstName("Arif Akram");
+        user.setLastName("Mohammed");
+        user.setUserId("am046752");
+        userRDBMSRepository.save(user);
+        log.info("User saved to RDBMS");
+    }
+
+    @Override
+    public void getUsers() {
+        Iterable<com.learning.spring.spring5.model.sql.User> users = userRDBMSRepository.findAll();
+        users.forEach(user -> {
+            log.info("User Id: " + user.getUserId());
+            log.info("First Name: " + user.getFirstName());
+            log.info("Last Name: " + user.getLastName());
+            log.info("----------");
+        });
+    }
 
 }
