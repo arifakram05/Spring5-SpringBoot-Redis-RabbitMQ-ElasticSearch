@@ -19,8 +19,10 @@ public class MessageConsumer {
         - One producer and One consumer
         - One producer and many consumers.
         - Consumer just re-queues when there is an error while message consumption.
-        - Creating Dead Letter Exchanges and associating queues to use DLXs (i.e. Moving messages from one queue to another queue upon
-        error)
+        - Creating Dead Letter Exchanges and associating queues to use DLXs (i.e. Moving messages from one queue to another queue via DLX
+        upon error)
+        - Publishing messages to queues with TTL
+        - Building a scheduler for dirty queues
 
      */
     @Autowired
